@@ -29,3 +29,48 @@ Then, ssh into the moon-ubuntu machine, and try it there:
 # Reference
 
 * https://wiki.strongswan.org/projects/strongswan/wiki/IntroductionTostrongSwan
+
+
+
+# vagrant up 问题
+## 1. 缺少 box
+https://app.vagrantup.com/peru/boxes/ubuntu-18.04-server-amd64
+
+``` bash 
+### 不知道项目原来的镜像是哪里的
+vagrant  box  add  peru/ubuntu-18.04-server-amd64 
+
+mkdir "ubuntu-18.04-server-amd64" && cd "ubuntu-18.04-server-amd64" || exit
+vagrant init "peru/ubuntu-18.04-server-amd64"
+vagrant up
+virsh list --all
+vagrant ssh
+vg destroy
+
+```
+
+## 2. nfs udp
+
+``` bash
+apt install nfs-kernel-server -y
+# nfsd enable udp
+cat /etc/nfs.conf| grep -n udp
+30:# udp-port=0
+57:udp=y
+
+systemctl restart rpcbind nfs-kernel-server
+
+
+mount -t nfs -o resvport,rw 192.168.121.1:/root/strongswan-site-to-site-vpn-vagrant /vagrant
+  
+umount /vagrant
+
+
+
+
+```
+
+
+
+
+

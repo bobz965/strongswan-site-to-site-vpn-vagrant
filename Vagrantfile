@@ -15,7 +15,7 @@ config_sun_ubuntu_fqdn  = "sun-ubuntu.#{config_sun_fqdn}"
 config_sun_ubuntu_ip    = '10.2.0.4'
 
 Vagrant.configure('2') do |config|
-  config.vm.box = 'ubuntu-18.04-amd64'
+  config.vm.box = 'peru/ubuntu-18.04-server-amd64'
 
   config.vm.provider :libvirt do |lv, config|
     lv.memory = 512
